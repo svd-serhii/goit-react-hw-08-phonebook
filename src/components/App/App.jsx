@@ -1,32 +1,35 @@
-import { useSelector } from 'react-redux';
-import Form from '../Form';
-import ContactsList from '../ContactsList';
-import Filter from '../Filter';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import styles from './App.module.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AppBar from 'components/AppBar/AppBar';
+import { Route, Routes } from 'react-router-dom';
+import HomeView from 'view/NomeView';
+import SignUp from 'view/SignUp';
+import SignIn from 'view/SignIn';
+import PhonebookView from 'view/PhonebookView';
+import { authOperations } from 'redux/auth';
 
-const App = () => {
-  const contactsRdx = useSelector(state => state.contacts);
+export default function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authOperations.fetchCurrentUser());
+  }, [dispatch]);
 
   return (
     <div className={styles.container}>
+      <AppBar />
+
+      <Routes>
+        <Route exact path="/" component={HomeView} />
+        <Route path="/register" component={SignUp} />
+        <Route path="/login" component={SignIn} />
+        <Route path="/phonebook" component={PhonebookView} />
+      </Routes>
+
       <ToastContainer autoClose={2000} theme="light" />
-      <h1 className={styles.mainTitle}>Phonebook</h1>
-      <Form />
-      <h2 className={styles.title}>Contacts</h2>
-      <div className={styles.wrap}>
-        {contactsRdx.length === 0 ? (
-          <p>Your contacts list is empty</p>
-        ) : (
-          <>
-            <Filter />
-            <ContactsList />
-          </>
-        )}
-      </div>
     </div>
   );
-};
-
-export default App;
+}
