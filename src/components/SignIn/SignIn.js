@@ -17,9 +17,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
-import operations from 'redux/auth/authOperations';
-
-const initialState = { email: '', password: '' };
+import { authOperations } from 'redux/auth';
 
 function Copyright(props) {
   return (
@@ -45,26 +43,28 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const [state, setState] = useState(initialState);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleChange = event => {
-    const { name, value } = event.currentTarget;
-    setState(prevState => ({ ...prevState, [name]: value }));
+  const handleChange = ({ target: { name, value } }) => {
+    switch (name) {
+      case 'email':
+        return setEmail(value);
+      case 'password':
+        return setPassword(value);
+      default:
+        return;
+    }
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(operations.logIn(state));
-    setState(initialState);
-    navigate('/goit-react-hw-08-phonebook/');
-
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+    dispatch(authOperations.logIn({ email, password }));
+    setEmail('');
+    setPassword('');
+    navigate('/phonebook');
   };
 
   return (
@@ -101,7 +101,7 @@ export default function SignIn() {
               autoComplete="email"
               autoFocus
               onChange={handleChange}
-              value={state.email}
+              value={email}
             />
             <TextField
               margin="normal"
@@ -113,7 +113,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
               onChange={handleChange}
-              value={state.password}
+              value={password}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -17,9 +15,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import operations from 'redux/auth/authOperations';
+import { authOperations } from 'redux/auth';
 
-const initialState = { name: '', email: '', password: '' };
+// const initialState = { name: '', email: '', password: '' };
 
 function Copyright(props) {
   return (
@@ -45,27 +43,32 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const [state, setState] = useState(initialState);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleChange = event => {
-    const { name, value } = event.currentTarget;
-    setState(prevState => ({ ...prevState, [name]: value }));
+  const handleChange = ({ target: { name, value } }) => {
+    switch (name) {
+      case 'name':
+        return setName(value);
+      case 'email':
+        return setEmail(value);
+      case 'password':
+        return setPassword(value);
+      default:
+        return;
+    }
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-
-    dispatch(operations.register(state));
-    setState(initialState);
-    //   navigate('/goit-react-hw-08-phonebook/');
-
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+    dispatch(authOperations.register({ name, email, password }));
+    setName('');
+    setEmail('');
+    setPassword('');
+    navigate('/phonebook');
   };
 
   return (
@@ -93,7 +96,7 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
                   name="name"
@@ -103,7 +106,7 @@ export default function SignUp() {
                   label="Name"
                   autoFocus
                   onChange={handleChange}
-                  value={state.name}
+                  value={name}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -115,7 +118,7 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   onChange={handleChange}
-                  value={state.email}
+                  value={email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -128,7 +131,7 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   onChange={handleChange}
-                  value={state.password}
+                  value={password}
                 />
               </Grid>
             </Grid>

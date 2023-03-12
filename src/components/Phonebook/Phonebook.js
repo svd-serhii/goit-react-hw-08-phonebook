@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
-import styles from './phonebookView.module.css';
+import styles from './phonebook.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Form from 'components/Form';
 import Filter from 'components/Filter';
 import ContactsList from 'components/ContactsList';
 
-const PhonebookView = () => {
+const Phonebook = () => {
   const contactsRdx = useSelector(state => state.contacts);
 
   return (
@@ -27,4 +27,4 @@ const PhonebookView = () => {
   );
 };
 
-export default PhonebookView;
+export default Phonebook;

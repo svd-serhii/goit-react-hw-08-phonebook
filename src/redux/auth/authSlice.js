@@ -10,26 +10,48 @@ const initialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  extraReducers: {
-    [authOperations.register.fulfilled](state, action) {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-    },
-    [authOperations.logIn.fulfilled](state, action) {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-    },
-    [authOperations.logOut.fulfilled](state, action) {
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-    },
-    [authOperations.fetchCurrentUser.fulfilled](state, action) {
-      state.user = action.payload;
-      state.isLoggedIn = true;
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(authOperations.register.pending, (state, action) => state)
+      .addCase(authOperations.register.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(authOperations.register.rejected, (state, action) => state);
+    builder
+      .addCase(authOperations.logIn.pending, (state, action) => state)
+      .addCase(authOperations.logIn.rejected, (state, action) => {
+        return state;
+      })
+      .addCase(authOperations.logIn.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLoggedIn = true;
+      });
+    builder
+      .addCase(authOperations.logOut.pending, (state, action) => state)
+      .addCase(authOperations.logOut.rejected, (state, action) => state)
+      .addCase(authOperations.logOut.fulfilled, (state, { payload }) => {
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
+      });
+    builder
+      .addCase(
+        authOperations.fetchCurrentUser.pending,
+        (state, action) => state
+      )
+      .addCase(authOperations.fetchCurrentUser.rejected, (state, action) => {
+        return state;
+      })
+      .addCase(
+        authOperations.fetchCurrentUser.fulfilled,
+        (state, { payload }) => {
+          state.user = payload.user;
+          state.isLoggedIn = true;
+        }
+      );
   },
 });
 

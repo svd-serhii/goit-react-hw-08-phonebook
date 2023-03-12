@@ -5,11 +5,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AppBar from 'components/AppBar/AppBar';
 import { Route, Routes } from 'react-router-dom';
-import HomeView from 'view/NomeView';
-import SignUp from 'view/SignUp';
-import SignIn from 'view/SignIn';
-import PhonebookView from 'view/PhonebookView';
 import { authOperations } from 'redux/auth';
+import Welcome from 'components/Wellcome/Welcome';
+import SignUp from 'components/SignUp/SignUp';
+import SignIn from 'components/SignIn/SignIn';
+import Phonebook from 'components/Phonebook/Phonebook';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -19,17 +19,18 @@ export default function App() {
   }, [dispatch]);
 
   return (
-    <div className={styles.container}>
+    <>
       <AppBar />
+      <div className={styles.container}>
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/register" element={<SignUp />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/phonebook" element={<Phonebook />} />
+        </Routes>
 
-      <Routes>
-        <Route exact path="/" component={HomeView} />
-        <Route path="/register" component={SignUp} />
-        <Route path="/login" component={SignIn} />
-        <Route path="/phonebook" component={PhonebookView} />
-      </Routes>
-
-      <ToastContainer autoClose={2000} theme="light" />
-    </div>
+        <ToastContainer autoClose={2000} theme="light" />
+      </div>
+    </>
   );
 }
