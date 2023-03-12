@@ -4,27 +4,35 @@ import 'react-toastify/dist/ReactToastify.css';
 import Form from 'components/Form';
 import Filter from 'components/Filter';
 import ContactsList from 'components/ContactsList';
+import { authSelectors } from 'redux/auth';
 
-const Phonebook = () => {
+const PhoneBook = () => {
   const contactsRdx = useSelector(state => state.contacts);
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.mainTitle}>Phonebook</h1>
-      <Form />
-      <h2 className={styles.title}>Contacts</h2>
-      <div className={styles.wrap}>
-        {contactsRdx.length === 0 ? (
-          <p>Your contacts list is empty</p>
-        ) : (
-          <>
-            <Filter />
-            <ContactsList />
-          </>
-        )}
-      </div>
+      {isLoggedIn ? (
+        <>
+          <h1 className={styles.mainTitle}>Phonebook</h1>
+          <Form />
+          <h2 className={styles.title}>Contacts</h2>
+          <div className={styles.wrap}>
+            {contactsRdx.length === 0 ? (
+              <p>Your contacts list is empty</p>
+            ) : (
+              <>
+                <Filter />
+                <ContactsList />
+              </>
+            )}
+          </div>
+        </>
+      ) : (
+        <h1 className={styles.title}>Phonebook App</h1>
+      )}
     </div>
   );
 };
 
-export default Phonebook;
+export default PhoneBook;

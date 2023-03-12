@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { authOperations } from 'redux/auth';
 
 function Copyright(props) {
@@ -46,7 +46,7 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
@@ -64,7 +64,7 @@ export default function SignIn() {
     dispatch(authOperations.logIn({ email, password }));
     setEmail('');
     setPassword('');
-    navigate('/phonebook');
+    // navigate('/');
   };
 
   return (

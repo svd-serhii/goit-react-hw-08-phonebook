@@ -7,11 +7,9 @@ import styles from './userMenu.module.css';
 export default function UserMenu() {
   const dispatch = useDispatch();
   const name = useSelector(authSelectors.getUsername);
-  console.log(name);
 
   return (
     <div className={styles.menuContainer}>
-      {/* <img src={avatar} alt="" width="32" style={styles.avatar} /> */}
       <span className={styles.userName}>Welcome, {name}</span>
       <button
         className={styles.userMenuBtn}
