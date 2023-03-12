@@ -12,16 +12,17 @@ export const UserRoutes = () => {
   return (
     <Suspense fallback={null}>
       <Routes>
-        <Route path="/" element={<Welcome />}></Route>
-        <Route index element={<Welcome />} />
+        <Route path="/" element={<Welcome />} />
+        {/* <Route index element={<Welcome />} /> */}
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<SignUp />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/contacts" element={<PhoneBook />} />
-          </Route>
         </Route>
-        <Route path="*" element={<Welcome />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/contacts" element={<PhoneBook />} />
+        </Route>
+        {/* </Route> */}
+        {/* <Route path="*" element={<Welcome />} /> */}
       </Routes>
     </Suspense>
   );

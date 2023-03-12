@@ -13,7 +13,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
-  });
+  }, [dispatch]);
 
   return (
     <>
