@@ -6,7 +6,6 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
 } from '@mui/material';

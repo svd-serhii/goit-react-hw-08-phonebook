@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
 import { fetchContacts, addContact, deleteContact } from './contactsOperations';
 
 const initialState = {
@@ -25,14 +24,6 @@ export const contactsSlice = createSlice({
     builder
       .addCase(addContact.pending, (state, { payload }) => state)
       .addCase(addContact.fulfilled, (state, { payload }) => {
-        if (state.items.find(({ name }) => name === payload.name)) {
-          return toast.error(`${payload.name} is already in contacts.`);
-        }
-        if (state.items.find(({ number }) => number === payload.number)) {
-          return toast.error(
-            `${payload.number} is already belong to ${state.name}.`
-          );
-        }
         state.isLoading = false;
         state.error = null;
         state.items = payload;
@@ -50,7 +41,6 @@ export const contactsSlice = createSlice({
           contact => contact.id === payload?.id
         );
         state.items.splice(index, 1);
-        toast.info('Contact deleted');
       })
       .addCase(deleteContact.rejected, (state, action) => {
         return state;

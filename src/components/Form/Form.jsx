@@ -9,10 +9,11 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsOperations';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { selectors } from 'redux/contacts';
 
 // import styles from './Form.module.css';
 
@@ -20,9 +21,27 @@ const Form = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(selectors.selectContacts);
 
   const handleSubmit = e => {
     e.preventDefault();
+    const { value } = e.currentTarget;
+    const normalizedName = value.name.toLowerCase();
+    const normalizedPhone = value.number.toLowerCase();
+    if (
+      contacts.find(contact => normalizedName === contact.name.toLowerCase())
+    ) {
+      return toast.error(`${value.name} is already in contacts`);
+    }
+
+    const contactNumber = contacts.find(
+      contact => normalizedPhone === contact.phone.toLowerCase()
+    );
+    if (contactNumber) {
+      return toast.error(
+        `${value.phone} is already belong to ${contactNumber.name}`
+      );
+    }
     dispatch(addContact({ name, number }));
     toast.success('Contacts added');
     setName('');
