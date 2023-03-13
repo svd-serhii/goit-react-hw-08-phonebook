@@ -16,7 +16,7 @@ const PhoneBook = () => {
         <>
           <h1 className={styles.mainTitle}>Phonebook</h1>
           <Form />
-          <h2 className={styles.title}>Contacts</h2>
+
           <div className={styles.wrap}>
             {contactsRdx.length === 0 ? (
               <p>Your contacts list is empty</p>

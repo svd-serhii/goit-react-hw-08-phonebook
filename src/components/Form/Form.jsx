@@ -3,7 +3,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-
+import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -12,19 +12,21 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsOperations';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 // import styles from './Form.module.css';
 
 const Form = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(addContact({ name, phone }));
+    dispatch(addContact({ name, number }));
+    toast.success('Contacts added');
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   const handleChange = e => {
@@ -33,8 +35,8 @@ const Form = () => {
       case 'name':
         setName(value);
         break;
-      case 'phone':
-        setPhone(value);
+      case 'number':
+        setNumber(value);
         break;
       default:
         return;
@@ -53,6 +55,9 @@ const Form = () => {
             alignItems: 'center',
           }}
         >
+          <Typography component="h2" variant="h5">
+            Add new contact
+          </Typography>
           <Box
             component="form"
             noValidate
@@ -77,15 +82,15 @@ const Form = () => {
                 <TextField
                   required
                   fullWidth
-                  id="phone"
+                  id="number"
                   type="tel"
                   label="Phone number"
-                  name="phone"
+                  name="number"
                   pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                   title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-                  autoComplete="phone"
+                  autoComplete="number"
                   onChange={handleChange}
-                  value={phone}
+                  value={number}
                 />
               </Grid>
             </Grid>

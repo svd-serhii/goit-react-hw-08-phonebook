@@ -1,3 +1,19 @@
+import { Mail } from '@mui/icons-material';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
+import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined';
+// import PersonRemove from '@mui/icons-material/PersonRemoveSharp';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -9,6 +25,7 @@ import styles from './ContactsList.module.css';
 
 const ContactsList = () => {
   const contactsRdx = useSelector(state => state.contacts.items);
+
   const filterRdx = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
@@ -29,24 +46,62 @@ const ContactsList = () => {
   const filteredList = searchContact();
 
   return (
-    <ul className={styles.contactsList}>
-      {filteredList.map(({ id, name, phone }) => (
-        <li key={id} className={styles.contactItem}>
-          <p className={styles.contact}>
-            {name}: {phone}
-          </p>
-          <button
-            className={styles.btnList}
-            type="button"
-            onClick={() => {
-              dispatch(deleteContact(id));
-            }}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <List className={styles.contactsList}>
+          {filteredList.map(({ id, name, number }) => (
+            <ListItem key={id} className={styles.contactItem}>
+              <ListItemIcon>
+                <ListItemAvatar>
+                  <Avatar sx={{ bgcolor: '#3e426b' }}>
+                    <Mail />
+                  </Avatar>
+                </ListItemAvatar>
+              </ListItemIcon>
+              <ListItemText
+                sx={{ color: '#3e426b' }}
+                primary={name}
+                secondary={number}
+              />
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                type="button"
+                onClick={() => dispatch(deleteContact(id))}
+              >
+                <PersonRemoveOutlinedIcon sx={{ color: '#fff' }} />
+              </Button>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Container>
+
+    // <ul className={styles.contactsList}>
+    //   {filteredList.map(({ id, name, number }) => (
+    //     <li key={id} className={styles.contactItem}>
+    //       <p className={styles.contact}>
+    //         {name}: {number}
+    //       </p>
+    //       <button
+    //         className={styles.btnList}
+    //         type="button"
+    //         onClick={handleDelete}
+    //       >
+    //         Delete
+    //       </button>
+    //     </li>
+    //   ))}
+    // </ul>
   );
 };
 
