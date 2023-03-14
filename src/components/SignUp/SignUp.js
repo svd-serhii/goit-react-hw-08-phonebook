@@ -47,7 +47,6 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
@@ -131,6 +130,7 @@ export default function SignUp() {
                   autoComplete="new-password"
                   onChange={handleChange}
                   value={password}
+                  title="The password must be at least 8 characters long."
                 />
               </Grid>
             </Grid>
