@@ -3,6 +3,7 @@ import {
   Avatar,
   Button,
   CssBaseline,
+  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -24,7 +25,6 @@ import styles from './ContactsList.module.css';
 
 const ContactsList = () => {
   const contactsRdx = useSelector(state => state.contacts.items);
-
   const filterRdx = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
@@ -33,12 +33,9 @@ const ContactsList = () => {
   }, [dispatch]);
 
   const searchContact = () => {
-    if (!filterRdx) {
-      return contactsRdx;
-    }
-    const normalize = filterRdx.toLowerCase();
+    const normalizeFilter = filterRdx.toLowerCase();
     return contactsRdx.filter(({ name }) =>
-      name.toLowerCase().includes(normalize)
+      name.toLowerCase().includes(normalizeFilter)
     );
   };
 
@@ -70,15 +67,15 @@ const ContactsList = () => {
                 primary={name}
                 secondary={number}
               />
-              <Button
+              <IconButton
                 size="small"
                 variant="contained"
                 color="primary"
                 type="button"
                 onClick={() => dispatch(deleteContact(id))}
               >
-                <PersonRemoveOutlinedIcon sx={{ color: '#fff' }} />
-              </Button>
+                <PersonRemoveOutlinedIcon sx={{ color: '#3e426b' }} />
+              </IconButton>
             </ListItem>
           ))}
         </List>
