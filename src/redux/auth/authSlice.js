@@ -19,32 +19,32 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
       })
       .addCase(authOperations.register.rejected, (state, action) => state);
+
     builder
       .addCase(authOperations.logIn.pending, (state, action) => state)
-      .addCase(authOperations.logIn.rejected, (state, action) => {
-        return state;
-      })
       .addCase(authOperations.logIn.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;
         state.isLoggedIn = true;
+      })
+      .addCase(authOperations.logIn.rejected, (state, action) => {
+        return state;
       });
+
     builder
       .addCase(authOperations.logOut.pending, (state, action) => state)
-      .addCase(authOperations.logOut.rejected, (state, action) => state)
       .addCase(authOperations.logOut.fulfilled, (state, { payload }) => {
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
-      });
+      })
+      .addCase(authOperations.logOut.rejected, (state, action) => state);
+
     builder
       .addCase(
         authOperations.fetchCurrentUser.pending,
         (state, action) => state
       )
-      .addCase(authOperations.fetchCurrentUser.rejected, (state, action) => {
-        return state;
-      })
       .addCase(
         authOperations.fetchCurrentUser.fulfilled,
         (state, { payload }) => {
@@ -53,6 +53,8 @@ const authSlice = createSlice({
         }
       );
   },
+}).addCase(authOperations.fetchCurrentUser.rejected, (state, action) => {
+  return state;
 });
 
 export default authSlice.reducer;

@@ -9,6 +9,7 @@ import { authSelectors } from 'redux/auth';
 const PhoneBook = () => {
   const contactsRdx = useSelector(state => state.contacts);
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+  console.log(isLoggedIn);
 
   return (
     <div className={styles.container}>
