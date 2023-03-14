@@ -29,7 +29,12 @@ const Filter = () => {
             alignItems: 'center',
           }}
         >
-          <Typography sx={{ marginBottom: 2 }} component="h2" variant="h5">
+          <Typography
+            sx={{ marginBottom: 2 }}
+            component="h2"
+            variant="h5"
+            color="#3e426b"
+          >
             Contacts
           </Typography>
 
@@ -41,7 +46,6 @@ const Filter = () => {
             fullWidth
             id="name"
             label="Find contacts by name"
-            autoFocus
             onChange={({ currentTarget }) =>
               dispatch(setFilter(currentTarget.value))
             }

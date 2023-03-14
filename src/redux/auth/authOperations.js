@@ -1,45 +1,48 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { instance } from 'redux/contacts/contactsApi';
 
-const token = {
-  set(token) {
-    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  },
-  unset() {
-    instance.defaults.headers.common.Authorization = '';
-  },
-};
+import * as api from 'services/authApi';
 
-const register = createAsyncThunk('auth/register', async credentials => {
-  try {
-    const { data } = await instance.post('/users/signup', credentials);
-    token.set(data.token);
-    toast.success(`Registration completed`);
-    return data;
-  } catch (error) {
-    return toast.error(`Registration failed - ${error.message}`);
+const register = createAsyncThunk(
+  'auth/register',
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await api.signup(data);
+      toast.success(`Registration completed`);
+      return result;
+    } catch (error) {
+      toast.error(`Registration failed - ${error.message}`);
+      return rejectWithValue(error);
+    }
   }
-});
+);
 
-const logIn = createAsyncThunk('auth/login', async credentials => {
-  try {
-    const { data } = await instance.post('/users/login', credentials);
-    token.set(data.token);
-    toast.success(`You are log in`);
-    return data;
-  } catch (error) {
-    return toast.error(`Log in failed - ${error.message}`);
+const logIn = createAsyncThunk(
+  'auth/login',
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await api.login(data);
+      toast.success(`You are log in`);
+      return result;
+    } catch (error) {
+      toast.error(`Log in failed - ${error.message}`);
+      return rejectWithValue(error);
+    }
   }
-});
+);
 
-const logOut = createAsyncThunk('auth/logout', async () => {
-  try {
-    await instance.post('/users/logout');
-    token.unset();
-    toast.info(`You are log out`);
-  } catch (error) {}
-});
+const logOut = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      const data = await api.logout();
+      toast.info(`You are log out`);
+      return data;
+    } catch ({ response }) {
+      return rejectWithValue({ response });
+    }
+  }
+);
 
 const fetchCurrentUser = createAsyncThunk(
   'auth/refresh',
@@ -51,9 +54,8 @@ const fetchCurrentUser = createAsyncThunk(
       return thunkAPI.rejectWithValue();
     }
 
-    token.set(persistedToken);
     try {
-      const { data } = await instance.get('/users/current');
+      const data = await api.getCurrent(persistedToken);
       return data;
     } catch (error) {
       toast.error(`${error.message}`);

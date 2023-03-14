@@ -1,3 +1,4 @@
+import { Loader } from 'components/Loader/Loader';
 import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute';
 import { PublicRoute } from 'components/PublicRoute/PublicRoute';
 import { lazy, Suspense } from 'react';
@@ -10,19 +11,18 @@ const PhoneBook = lazy(() => import('components/Phonebook/Phonebook'));
 
 export const UserRoutes = () => {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Welcome />} />
-        {/* <Route index element={<Welcome />} /> */}
+
         <Route element={<PublicRoute />}>
-          <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<SignUp />} />
+          <Route path="/login" element={<SignIn />} />
         </Route>
+
         <Route element={<PrivateRoute />}>
           <Route path="/contacts" element={<PhoneBook />} />
         </Route>
-        {/* </Route> */}
-        {/* <Route path="*" element={<Welcome />} /> */}
       </Routes>
     </Suspense>
   );

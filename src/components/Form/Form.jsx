@@ -14,42 +14,37 @@ import { addContact } from 'redux/contacts/contactsOperations';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-// import styles from './Form.module.css';
-
 const Form = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(state => state.contacts.items);
+  const contacts = useSelector(state => state.contacts);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const { value } = e.currentTarget;
-    console.log(value);
-    const normalizedName = value.name.toLowerCase();
-    const normalizedPhone = value.number.toLowerCase();
+  const handleSubmit = event => {
+    event.preventDefault();
+    const { elements } = event.currentTarget;
+    const normalizedName = elements.name.value.toLowerCase();
+    const normalizedNumber = elements.number.value.toLowerCase();
     if (
       contacts.find(contact => normalizedName === contact.name.toLowerCase())
     ) {
-      return toast.error(`${value.name} is already in contacts`);
+      return toast.error(`${elements.name.value} is already in contacts`);
     }
 
     const contactNumber = contacts.find(
-      contact => normalizedPhone === contact.number.toLowerCase()
+      contact => normalizedNumber === contact.number.toLowerCase()
     );
     if (contactNumber) {
       return toast.error(
-        `${value.number} is already belong to ${contactNumber.name}`
+        `${elements.number.value} is set for contact ${contactNumber.name}`
       );
     }
     dispatch(addContact({ name, number }));
-    toast.success('Contacts added');
     setName('');
     setNumber('');
   };
 
-  const handleChange = e => {
-    const { name, value } = e.target;
+  const handleChange = ({ target: { name, value } }) => {
     switch (name) {
       case 'name':
         setName(value);
@@ -74,7 +69,7 @@ const Form = () => {
             alignItems: 'center',
           }}
         >
-          <Typography component="h2" variant="h5">
+          <Typography component="h2" variant="h5" color="#3e426b">
             Add new contact
           </Typography>
           <Box

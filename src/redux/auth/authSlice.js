@@ -48,13 +48,14 @@ const authSlice = createSlice({
       .addCase(
         authOperations.fetchCurrentUser.fulfilled,
         (state, { payload }) => {
-          state.user = payload.user;
+          state.user = payload;
           state.isLoggedIn = true;
         }
-      );
+      )
+      .addCase(authOperations.fetchCurrentUser.rejected, (state, action) => {
+        return state;
+      });
   },
-}).addCase(authOperations.fetchCurrentUser.rejected, (state, action) => {
-  return state;
 });
 
 export default authSlice.reducer;
