@@ -58,3 +58,5 @@ const Filter = () => {
 };
 
 export default Filter;
+
+Filter.propType = {};

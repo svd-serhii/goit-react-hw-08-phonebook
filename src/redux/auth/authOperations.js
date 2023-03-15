@@ -11,7 +11,7 @@ const register = createAsyncThunk(
       toast.success(`Registration completed`);
       return result;
     } catch (error) {
-      toast.error(`Registration failed - ${error.message}`);
+      toast.error(`Registration failed`);
       return rejectWithValue(error);
     }
   }
@@ -25,7 +25,7 @@ const logIn = createAsyncThunk(
       toast.success(`You are log in`);
       return result;
     } catch (error) {
-      toast.error(`Log in failed - ${error.message}`);
+      toast.error(`Log in failed`);
       return rejectWithValue(error);
     }
   }
@@ -58,7 +58,7 @@ const fetchCurrentUser = createAsyncThunk(
       const data = await api.getCurrent(persistedToken);
       return data;
     } catch (error) {
-      toast.error(`${error.message}`);
+      console.log(`${error.message}`);
     }
   }
 );

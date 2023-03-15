@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -117,3 +117,10 @@ const Form = () => {
 };
 
 export default Form;
+
+Form.propType = {
+  handleSubmit: PropTypes.func.required,
+  handleChange: PropTypes.func.required,
+  name: PropTypes.string.required,
+  number: PropTypes.string.required,
+};

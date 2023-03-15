@@ -10,14 +10,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-
 import { authOperations } from 'redux/auth';
-
-// const initialState = { name: '', email: '', password: '' };
 
 function Copyright(props) {
   return (
@@ -156,3 +153,11 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
+
+SignUp.propType = {
+  handleSubmit: PropTypes.func.required,
+  handleChange: PropTypes.func.required,
+  password: PropTypes.string.required,
+  email: PropTypes.string.required,
+  name: PropTypes.string.required,
+};
