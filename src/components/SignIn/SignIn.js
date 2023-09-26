@@ -126,7 +126,7 @@ export default function SignIn() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item>
+              <Grid item sx={{ margin: '0 auto' }}>
                 <Link
                   href="https://svd-serhii.github.io/goit-react-hw-08-phonebook/signup"
                   variant="body2"
@@ -137,7 +137,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

@@ -140,7 +140,7 @@ export default function SignUp() {
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
-              <Grid item>
+              <Grid item sx={{ margin: '0 auto' }}>
                 <Link
                   href="https://svd-serhii.github.io/goit-react-hw-08-phonebook/login"
                   variant="body2"
