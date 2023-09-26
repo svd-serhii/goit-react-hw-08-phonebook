@@ -29,7 +29,7 @@ function Copyright(props) {
       {'Copyright © '}
       <Link
         color="inherit"
-        href="https://svd-serhii.github.io/goit-react-hw-08-phonebook/signup"
+        href="https://svd-serhii.github.io/goit-react-hw-08-phonebook"
       >
         svd-serhii
       </Link>
@@ -127,7 +127,10 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  href="https://svd-serhii.github.io/goit-react-hw-08-phonebook/signup"
+                  variant="body2"
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
