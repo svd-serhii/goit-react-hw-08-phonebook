@@ -7,7 +7,7 @@ export default function AuthNav() {
   return (
     <div className={styles.authNavContainer}>
       <NavLink
-        to="/register"
+        to="/signup"
         exact="true"
         activeclassname={styles.active}
         className={styles.authLink}

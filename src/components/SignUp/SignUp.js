@@ -27,7 +27,7 @@ function Copyright(props) {
       {'Copyright © '}
       <Link
         color="inherit"
-        href="https://svd-serhii.github.io/goit-react-hw-08-phonebook/"
+        href="https://svd-serhii.github.io/goit-react-hw-08-phonebook/login"
       >
         svd-serhii
       </Link>{' '}
