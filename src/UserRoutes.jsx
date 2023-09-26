@@ -16,7 +16,7 @@ export const UserRoutes = () => {
         <Route path="/" element={<Welcome />} />
 
         <Route element={<PublicRoute />}>
-          <Route path="/register" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<SignIn />} />
         </Route>
 
